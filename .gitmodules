@@ -1,0 +1,3 @@
+[submodule "lib/directxshadercompiler"]
+	path = lib/directxshadercompiler
+	url = ../../hexops/directxshadercompiler
