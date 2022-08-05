@@ -10,8 +10,9 @@ pub fn build(b: *std.build.Builder) void {
     lib.setBuildMode(mode);
     lib.install();
     // lib.linkSystemLibrary("c");
-    // lib.linkLibC();
-    lib.linkLibCpp();
+    lib.linkLibC();
+    // lib.linkLibCpp();
+    lib.addIncludeDir("lib/directxshadercompiler/include/dxc");
     const target = (std.zig.system.NativeTargetInfo.detect(b.allocator, lib.target) catch unreachable).target;
     const options = Options{ };
     const opt = options.detectDefaults(target);
@@ -34,6 +35,9 @@ pub fn build(b: *std.build.Builder) void {
 
     const main_tests = b.addTest("src/dxc.zig");
     main_tests.setBuildMode(mode);
+    // main_tests.linkLibCpp();
+    main_tests.linkLibC();
+    main_tests.addIncludeDir("lib/directxshadercompiler/include/dxc");
 
     const test_step = b.step("test", "Run library tests");
     test_step.dependOn(&main_tests.step);
